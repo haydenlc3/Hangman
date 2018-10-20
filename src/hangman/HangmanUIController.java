@@ -1,5 +1,6 @@
 package hangman;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -10,6 +11,9 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javax.imageio.ImageIO;
 
 /**
  * FXML Controller class
@@ -33,6 +37,8 @@ public class HangmanUIController implements Initializable {
     int wins = 0;
     
     int losses = 0;
+    
+    int triesLeft = 6;
 
     @FXML
     private ChoiceBox category;
@@ -49,6 +55,9 @@ public class HangmanUIController implements Initializable {
     @FXML
     private TextField guess;
     
+    @FXML
+    private ImageView hangman;
+    
     public void categoryPicked() {
         int selectedItem = category.getSelectionModel().getSelectedIndex();
         int randomItem = (int) (Math.random() * categoriesData[selectedItem].length);
@@ -63,11 +72,22 @@ public class HangmanUIController implements Initializable {
         incorrectGuesses.clear();
         correctGuesses.clear();
         guess.clear();
+        triesLeft = 6;
+        setImage();
     }
     
     public void guessEntered() {
-        if (randomWord.equals(guess.getText().toLowerCase())) {
+        int count = 0;
+        
+        for (int i = 0; i < randomWord.length(); i++) {
+            if (correctGuesses.getText().contains(randomWord.substring(i, i + 1))) {
+                count++;
+            }
+        }
+        
+        if (randomWord.equals(guess.getText().toLowerCase()) || count == randomWord.length()) {
             wins++;
+            
         } else {
             if (randomWord.contains(guess.getText().toLowerCase())) {
                 correctGuesses.appendText(guess.getText().toLowerCase() + ", ");
@@ -83,8 +103,44 @@ public class HangmanUIController implements Initializable {
 
                 text.setText(wordText);
             } else {
-                incorrectGuesses.appendText(guess.getText().toLowerCase() + ", ");
+                triesLeft--;
+                
+                if (triesLeft > 0) {
+                    incorrectGuesses.appendText(guess.getText().toLowerCase() + ", ");
+                } else {
+                    losses++;
+                }
+                
+                setImage();
             }
+        }
+        
+        guess.clear();
+    }
+    
+    public void setImage() {
+        switch (triesLeft) {
+            case 6:
+                hangman.setImage(new Image (getClass().getResourceAsStream("Images/hangmanFull.png")));
+                break;
+            case 5:
+                hangman.setImage(new Image (getClass().getResourceAsStream("Images/hangmanOneArm.png")));
+                break;
+            case 4:
+                hangman.setImage(new Image (getClass().getResourceAsStream("Images/hangmanTwoLegs.png")));
+                break;
+            case 3:
+                hangman.setImage(new Image (getClass().getResourceAsStream("Images/hangmanOneLeg.png")));
+                break;
+            case 2:
+                hangman.setImage(new Image (getClass().getResourceAsStream("Images/hangmanTorso.png")));
+                break;
+            case 1:
+                hangman.setImage(new Image (getClass().getResourceAsStream("Images/hangmanHead.png")));
+                break;
+            case 0:
+                hangman.setImage(new Image (getClass().getResourceAsStream("Images/hangmanDead.png")));
+                break;
         }
     }
     

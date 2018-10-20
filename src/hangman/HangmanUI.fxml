@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.image.*?>
 <?import java.lang.*?>
@@ -16,7 +17,7 @@
    <children>
       <ImageView fitHeight="700.0" fitWidth="519.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <image>
-            <Image url="@PaperBackground.jpg" />
+            <Image url="@Images/PaperBackground.jpg" />
          </image>
       </ImageView>
       <Label layoutX="124.0" layoutY="28.0" text="Hangman">
@@ -39,7 +40,7 @@
             </Button>
          </children>
       </Pane>
-      <BorderPane layoutY="220.0" prefHeight="81.0" prefWidth="177.0">
+      <BorderPane layoutX="15.0" layoutY="220.0" prefHeight="81.0" prefWidth="105.0">
          <top>
             <Label text="Incorrect" underline="true" BorderPane.alignment="CENTER">
                <font>
@@ -48,10 +49,10 @@
             </Label>
          </top>
          <center>
-            <TextArea fx:id="incorrectGuesses" editable="false" opacity="0.5" prefHeight="58.0" prefWidth="181.0" BorderPane.alignment="CENTER" />
+            <TextArea fx:id="incorrectGuesses" editable="false" opacity="0.5" prefHeight="58.0" prefWidth="64.0" BorderPane.alignment="CENTER" />
          </center>
       </BorderPane>
-      <BorderPane layoutX="342.0" layoutY="220.0" prefHeight="81.0" prefWidth="177.0">
+      <BorderPane layoutX="399.0" layoutY="220.0" prefHeight="81.0" prefWidth="105.0">
          <top>
             <Label text="Correct" underline="true" BorderPane.alignment="CENTER">
                <font>
@@ -60,7 +61,7 @@
             </Label>
          </top>
          <center>
-            <TextArea fx:id="correctGuesses" editable="false" opacity="0.5" prefHeight="62.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+            <TextArea fx:id="correctGuesses" editable="false" opacity="0.5" prefHeight="58.0" prefWidth="133.0" BorderPane.alignment="CENTER" />
          </center>
       </BorderPane>
       <HBox layoutX="16.0" layoutY="566.0" prefHeight="50.0" prefWidth="488.0">
@@ -87,5 +88,10 @@
             </Label>
          </children>
       </StackPane>
+      <ImageView fx:id="hangman" fitHeight="248.0" fitWidth="271.0" layoutX="137.0" layoutY="249.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Images/hangmanFull.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
