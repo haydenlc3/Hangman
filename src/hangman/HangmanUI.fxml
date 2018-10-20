@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="681.0" prefWidth="507.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hangman.HangmanUIController">
+    <stylesheets>
+        <URL value="@hangmanui.css" />
+    </stylesheets>
+   <children>
+      <ImageView fitHeight="700.0" fitWidth="519.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="@PaperBackground.jpg" />
+         </image>
+      </ImageView>
+      <Label layoutX="124.0" layoutY="28.0" text="Hangman">
+         <font>
+            <Font name="Tahoma" size="64.0" />
+         </font>
+      </Label>
+      <Pane layoutX="44.0" layoutY="132.0" prefHeight="81.0" prefWidth="430.0">
+         <children>
+            <Label layoutY="14.0" text="Pick a category: ">
+               <font>
+                  <Font name="Tahoma" size="24.0" />
+               </font>
+            </Label>
+            <ChoiceBox fx:id="category" layoutX="177.0" layoutY="10.0" prefHeight="39.0" prefWidth="177.0" />
+            <Button layoutX="380.0" layoutY="12.0" mnemonicParsing="false" onAction="#categoryPicked" style="-fx-background-color: green;" text="Go">
+               <font>
+                  <Font name="Verdana" size="18.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+      <BorderPane layoutY="220.0" prefHeight="81.0" prefWidth="177.0">
+         <top>
+            <Label text="Incorrect" underline="true" BorderPane.alignment="CENTER">
+               <font>
+                  <Font name="Verdana" size="18.0" />
+               </font>
+            </Label>
+         </top>
+         <center>
+            <TextArea fx:id="incorrectGuesses" editable="false" opacity="0.5" prefHeight="58.0" prefWidth="181.0" BorderPane.alignment="CENTER" />
+         </center>
+      </BorderPane>
+      <BorderPane layoutX="342.0" layoutY="220.0" prefHeight="81.0" prefWidth="177.0">
+         <top>
+            <Label text="Correct" underline="true" BorderPane.alignment="CENTER">
+               <font>
+                  <Font name="Verdana" size="18.0" />
+               </font>
+            </Label>
+         </top>
+         <center>
+            <TextArea fx:id="correctGuesses" editable="false" opacity="0.5" prefHeight="62.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+         </center>
+      </BorderPane>
+      <HBox layoutX="16.0" layoutY="566.0" prefHeight="50.0" prefWidth="488.0">
+         <children>
+            <Label text="Enter guess: ">
+               <font>
+                  <Font name="Tahoma" size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="guess" prefHeight="39.0" prefWidth="273.0" />
+            <Button mnemonicParsing="false" onAction="#guessEntered" prefHeight="19.0" prefWidth="105.0" style="-fx-background-color: green;" text="Submit">
+               <font>
+                  <Font name="Verdana" size="18.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
+      <StackPane layoutX="16.0" layoutY="466.0" prefHeight="86.0" prefWidth="488.0">
+         <children>
+            <Label fx:id="text" alignment="CENTER" contentDisplay="CENTER" prefHeight="86.0" prefWidth="488.0" text="_ _ _">
+               <font>
+                  <Font name="Lucida Sans Regular" size="48.0" />
+               </font>
+            </Label>
+         </children>
+      </StackPane>
+   </children>
+</AnchorPane>
