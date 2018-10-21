@@ -81,7 +81,7 @@
       </HBox>
       <StackPane layoutX="16.0" layoutY="466.0" prefHeight="86.0" prefWidth="488.0">
          <children>
-            <Label fx:id="text" alignment="CENTER" contentDisplay="CENTER" prefHeight="86.0" prefWidth="488.0" text="_ _ _">
+            <Label fx:id="text" alignment="CENTER" contentDisplay="CENTER" prefHeight="86.0" prefWidth="488.0">
                <font>
                   <Font name="Lucida Sans Regular" size="48.0" />
                </font>
@@ -93,5 +93,20 @@
             <Image url="@Images/hangmanFull.png" />
          </image>
       </ImageView>
+      <Label fx:id="winsLabel" layoutX="124.0" layoutY="605.0" text="Wins:">
+         <font>
+            <Font name="Tahoma" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="lossesLabel" layoutX="124.0" layoutY="628.0" text="Losses:">
+         <font>
+            <Font name="Tahoma" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="percentageLabel" layoutX="124.0" layoutY="651.0" text="Win percentage:">
+         <font>
+            <Font name="Tahoma" size="18.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

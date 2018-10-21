@@ -1,6 +1,5 @@
 package hangman;
 
-import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -13,7 +12,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javax.imageio.ImageIO;
 
 /**
  * FXML Controller class
@@ -24,12 +22,14 @@ import javax.imageio.ImageIO;
 public class HangmanUIController implements Initializable {
     
     private final ObservableList<String> categories = FXCollections.observableArrayList(
-        "Animals", "Sports"
+        "Animals", "Sports", "Countries", "Languages"
     );
     
     private final String[][] categoriesData = {
-        {"elephant", "bear"},
-        {"baseball", "basketball", "football"}
+        {"elephant", "bear", "tiger", "bass", "dolphin", "eagle", "shark", "snake", "giraffe", "llama", "leopard", "octopus", "pig"},
+        {"baseball", "basketball", "football", "soccer", "lacrosse", "tennis", "golf", "volleyball", "boxing", "archery", "badminton"},
+        {"america", "mexico", "canada", "brazil", "spain", "france", "china", "peru", "russia", "japan", "australia", "india", "chile"},
+        {"english", "spanish", "swahili", "hindi", "french", "russian", "german", "chinese", "japanese", "arabic", "hebrew", "latin"}
     };
     
     String randomWord;
@@ -51,6 +51,15 @@ public class HangmanUIController implements Initializable {
     
     @FXML
     private Label text;
+    
+    @FXML
+    private Label winsLabel;
+    
+    @FXML
+    private Label lossesLabel;
+    
+    @FXML
+    private Label percentageLabel;
     
     @FXML
     private TextField guess;
@@ -77,45 +86,64 @@ public class HangmanUIController implements Initializable {
     }
     
     public void guessEntered() {
-        int count = 0;
-        
-        for (int i = 0; i < randomWord.length(); i++) {
-            if (correctGuesses.getText().contains(randomWord.substring(i, i + 1))) {
-                count++;
-            }
-        }
-        
-        if (randomWord.equals(guess.getText().toLowerCase()) || count == randomWord.length()) {
-            wins++;
-            
-        } else {
-            if (randomWord.contains(guess.getText().toLowerCase())) {
-                correctGuesses.appendText(guess.getText().toLowerCase() + ", ");
-                String wordText = "";
-
-                for (int i = 0; i < randomWord.length(); i++) {
-                    if (correctGuesses.getText().contains(randomWord.substring(i, i + 1))) {
-                        wordText += randomWord.charAt(i) + " ";
-                    } else {
-                        wordText += "_ ";
-                    }
-                }
-
-                text.setText(wordText);
-            } else {
-                triesLeft--;
-                
-                if (triesLeft > 0) {
-                    incorrectGuesses.appendText(guess.getText().toLowerCase() + ", ");
+        if (randomWord != null) {
+            if (guess.getText().length() == 1 && isAlpha(guess.getText())) {
+                if (incorrectGuesses.getText().contains(guess.getText()) || correctGuesses.getText().contains(guess.getText())) {
+                    guess.setText("You've already guessed that");
                 } else {
-                    losses++;
+                    if (randomWord.contains(guess.getText().toLowerCase())) {
+                        correctGuesses.appendText(guess.getText().toLowerCase() + ", ");
+                        String wordText = "";
+
+                        for (int i = 0; i < randomWord.length(); i++) {
+                            if (correctGuesses.getText().contains(randomWord.substring(i, i + 1))) {
+                                wordText += randomWord.charAt(i) + " ";
+                            } else {
+                                wordText += "_ ";
+                            }
+                        }
+
+                        text.setText(wordText);
+                        int count = 0;
+
+                        for (int i = 0; i < randomWord.length(); i++) {
+                            if (correctGuesses.getText().contains(randomWord.substring(i, i + 1))) {
+                                count++;
+                            }
+                        }
+
+                        if (count == randomWord.length()) {
+                            wins++;
+                            updateStatus();
+                        } 
+                    } else {
+                        triesLeft--;
+
+                        if (triesLeft > 0) {
+                            incorrectGuesses.appendText(guess.getText().toLowerCase() + ", ");
+                        } else {
+                            losses++;
+                            String wordText = "";
+
+                            for (int i = 0; i < randomWord.length(); i++) {
+                                wordText += randomWord.charAt(i) + " ";
+                            }
+                            
+                            updateStatus();
+                            text.setText(wordText);
+                        }
+                        
+                        setImage();
+                    } 
+                    
+                    guess.clear();
                 }
-                
-                setImage();
+            } else {
+                guess.setText("You must only enter a single a-z character");
             }
+        } else {
+            guess.setText("Select a category");
         }
-        
-        guess.clear();
     }
     
     public void setImage() {
@@ -144,10 +172,26 @@ public class HangmanUIController implements Initializable {
         }
     }
     
+    public void updateStatus() {
+        winsLabel.setText("Wins: " + wins);
+        lossesLabel.setText("Losses: " + losses);
+        percentageLabel.setText("Win percentage: " + ((int)Math.round(wins/(wins + losses)) * 100));
+    }
+    
+    public static boolean isAlpha(String str) {  
+          try {  
+            double d = Double.parseDouble(str);  
+          }  
+          catch(NumberFormatException nfe) {  
+            return true;  
+          }  
+          
+          return false;  
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         category.setItems(categories);
         category.getSelectionModel().select(0);
     }    
-    
 }
